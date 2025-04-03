@@ -1,0 +1,67 @@
+# Base coding style. Options: LLVM, Google, Chromium, Mozilla, WebKit.
+BasedOnStyle: LLVM  
+
+# Indentation width in spaces.  
+# 2 is standard for LLVM, but 4 improves readability.
+IndentWidth: 4  
+
+# Maximum line length before wrapping.  
+# 100 is a good balance between readability and code review.
+ColumnLimit: 100  
+
+# Use spaces instead of tabs.  
+# Never – ensures consistent formatting across environments.
+UseTab: Never  
+
+# Indent `case` labels inside `switch` statements.  
+# true – increases readability by keeping `case` properly aligned.
+IndentCaseLabels: true  
+
+# Brace positioning in constructs like `if`, `for`, `while`, `class`, `namespace`.  
+# Attach – keeps `{` on the same line (K&R style).
+BreakBeforeBraces: Attach  
+
+# Allow short functions to be written in a single line.  
+# Inline – only if the function body is very short.
+AllowShortFunctionsOnASingleLine: Inline  
+
+# Always break template declarations onto a new line.  
+# Improves readability for complex template functions and classes.
+AlwaysBreakTemplateDeclarations: Yes  
+
+# Pack function arguments into a single line when possible.  
+# false – forces each argument onto a new line for better readability.
+BinPackArguments: false  
+
+# Pack function parameters into a single line when possible.  
+# false – forces each parameter onto a new line.
+BinPackParameters: false  
+
+# Pointer and reference alignment style.  
+# Left – `int* ptr;` (recommended, matches STL style).
+PointerAlignment: Left  
+
+# Number of spaces before trailing comments (`//` at the end of a line).  
+SpacesBeforeTrailingComments: 1  
+
+# Insert a space before parentheses in control statements (`if`, `while`, `for`).  
+# ControlStatements – applies to `if`, `for`, `while`, but not function calls.
+SpaceBeforeParens: ControlStatements  
+
+# Automatically sort `#include` directives.  
+# true – useful for CI/CD to maintain a consistent order.
+SortIncludes: true  
+
+# How to handle `#include` grouping:  
+# Preserve – keeps the original order,  
+# Merge – merges identical includes,  
+# Regroup – groups them by type (standard, third-party, local).
+IncludeBlocks: Preserve  
+
+# Maximum number of consecutive empty lines to keep.  
+# 1 – prevents excessive blank lines in the code.
+MaxEmptyLinesToKeep: 1  
+
+# Automatically reformats long comments.  
+# true – wraps long `//` and `/* */` comments to fit within `ColumnLimit`.
+ReflowComments: true  
