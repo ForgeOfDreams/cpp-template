@@ -21,9 +21,13 @@ cpp-template/
 ## ⚡ Features
 
 ✅ CMake Support – Easy and portable build system
+
 ✅ GitHub Actions – Automated build and test workflows
+
 ✅ Unit Testing – GoogleTest, Catch2, or other frameworks
+
 ✅ .clang-format – Code style enforcement
+
 ✅ Modular Structure – Clean and maintainable project organization
 
 ## 🚀 Getting Started
