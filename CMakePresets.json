@@ -2,51 +2,115 @@
   "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 28,
+    "minor": 31,
     "patch": 0
   },
   "configurePresets": [
     {
-      "name": "dev",
-      "displayName": "Base preset for library developers",
-      "binaryDir": "${sourceDir}/build/${presetName}",
+      "name": "base",
       "hidden": true,
+      "description": "Base preset with common settings for all configurations.",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "generator": "Ninja",
       "cacheVariables": {
-        "PROJECT_BUILD_TESTS": "ON",
-        "PROJECT_BUILD_EXAMPLES": "ON"
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "BREAD_PROJECT_BUILD": "ON"
       }
     },
     {
-      "name": "dev-win",
-      "description": "Windows preset for library developers",
-      "hidden": false,
-      "inherits": ["dev"],
+      "name": "linux-debug-clang",
+      "inherits": "base",
+      "displayName": "Linux Debug Clang",
+      "description": "Linux Debug build with Clang and strict warnings",
+      "environment": {
+        "CC": "clang",
+        "CXX": "clang++"
+      },
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "/W4 /EHsc /w14242 /w14254 /w14263 /w14265 /w14287 /w14289 /w14296 /w14311 /w14545 /w14546 /w14547 /w14549 /w14555 /w14640 /w14826 /w14928 /WX"
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wcast-align -Wcast-qual -Wnull-dereference -Woverloaded-virtual -Wformat=2 -Werror"
       }
     },
     {
-      "name": "dev-linux",
-      "description": "Linux preset for library developers",
-      "hidden": false,
-      "inherits": ["dev"],
+      "name": "linux-release-clang",
+      "inherits": "base",
+      "displayName": "Linux Release Clang",
+      "description": "Linux Release build with Clang and strict warnings",
+      "environment": {
+        "CC": "clang",
+        "CXX": "clang++"
+      },
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wsign-conversion -Wcast-align -Wcast-qual -Wnull-dereference -Woverloaded-virtual -Wformat=2 -Werror"
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wformat=2 -Woverloaded-virtual -Wnull-dereference -Wnon-virtual-dtor -Wdouble-promotion -Wimplicit-fallthrough -Wmissing-declarations -Wswitch-enum -Wshadow=local -Werror"
+      }
+    },
+    {
+      "name": "windows-debug-clang",
+      "inherits": "base",
+      "displayName": "Windows Debug Clang",
+      "description": "Windows Debug build with Clang and strict warnings",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "environment": {
+        "CC": "clang",
+        "CXX": "clang++"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wshadow -Wconversion -Wcast-align -Wcast-qual -Wnull-dereference -Woverloaded-virtual -Wformat=2"
+      }
+    },
+    {
+      "name": "windows-release-clang",
+      "inherits": "base",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "displayName": "Windows Release Clang",
+      "description": "Windows Release build with Clang and strict warnings",
+      "environment": {
+        "CC": "clang",
+        "CXX": "clang++"
+      },
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Wformat=2 -Woverloaded-virtual -Wnull-dereference -Wnon-virtual-dtor -Wdouble-promotion -Wimplicit-fallthrough -Wmissing-declarations -Wswitch-enum -Wshadow=local"
       }
     }
   ],
   "buildPresets": [
     {
-      "name": "debug",
-      "displayName": "Base preset for library developers",
-      "configurePreset": "dev",
+      "name": "build-linux-debug-clang",
+      "configurePreset": "linux-debug-clang",
       "configuration": "Debug"
     },
     {
-      "name": "release",
-      "displayName": "Optimized build for production",
-      "configurePreset": "dev",
+      "name": "build-linux-release-clang",
+      "configurePreset": "linux-release-clang",
       "configuration": "Release"
+    },
+    {
+      "name": "build-windows-debug-clang",
+      "configurePreset": "windows-debug-clang",
+      "configuration": "Debug"
+    },
+    {
+      "name": "build-windows-release-clang",
+      "configurePreset": "windows-release-clang",
+      "configuration": "Release"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "test",
+      "description": "Generic test preset using base configuration",
+      "configurePreset": "base",
+      "output": {
+        "outputOnFailure": true
+      }
     }
   ]
 }
